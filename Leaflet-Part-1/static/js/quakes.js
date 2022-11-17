@@ -1,8 +1,5 @@
-// Define earthquakes and tectonic plates GeoJSON url variables
+// Define earthquakes GeoJSON url variable
 let earthquakesURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojson";
-
-let platesURL = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json"
-
 
   switch(true) {
     case earthquakesURL.includes("_day"):
@@ -14,13 +11,7 @@ let platesURL = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/
     case earthquakesURL.includes("_month"):
       periodText = "past 30 days.";
       break;
-    
-  }
-
-console.log("Fred: " + periodText);
-
-
-
+              }
 
 d3.json(earthquakesURL, function(earthquakeData) {
   // Get marker size from magnitide and mulitply by 4 to increase size on map
@@ -29,39 +20,11 @@ d3.json(earthquakesURL, function(earthquakeData) {
   };
 
 
-
-// Get plates data via platesURL
-d3.json(platesURL, function(data) {
-  L.geoJSON(data, {
-    color: "orange",
-    weight: 2
-  }).addTo(plates);
-  plates.addTo(myMap);
-});
-
-
-// Create two layerGroups
+// Create layerGroup
 let earthquakes = L.layerGroup();
-let plates = L.layerGroup();
-
-// Define tile layers
-let satelliteMap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
-  attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-  maxZoom: 18,
-  id: "mapbox.satellite",
-  accessToken: API_KEY
-});
 
 
-let outdoorsMap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-  attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-  tileSize: 512,
-  maxZoom: 18,
-  zoomOffset: -1,
-  id: "mapbox/outdoors-v11",
-  accessToken: API_KEY
-});
-
+// Define tile layer
 let grayscaleMap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
   attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
   tileSize: 512,
@@ -71,19 +34,11 @@ let grayscaleMap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/
   accessToken: API_KEY
 });
 
-// Create a baseMaps object.
+// Create a baseMaps object
 let baseMaps = {
-  "Satellite Map": satelliteMap,
-  "Grayscale Map": grayscaleMap,
-  "Outdoors Map": outdoorsMap
-};
+ "Grayscale Map": grayscaleMap
+  };
 
-// Create an overlay object to hold the overlays
-let overlayMaps = {
-  "Earthquakes": earthquakes,
-  "Tectonic Plates": plates
-  
-};
 
 // Create the map
 let myMap = L.map("mapid", {
@@ -91,16 +46,13 @@ let myMap = L.map("mapid", {
     37.09, -95.71
   ],
   zoom: 2,
-  layers: [satelliteMap, earthquakes]
+  layers: [grayscaleMap, earthquakes]
 });
 
 // Create a layer control
 // Pass in the baseMaps and overlayMaps
 // Add the layer control to the map
-L.control.layers(baseMaps, overlayMaps, {
-  collapsed: false
-}).addTo(myMap);
-
+L.control.layers(baseMaps).addTo(myMap);
 
   // Determine the marker color by depth
   function chooseColor(depth) {
@@ -145,7 +97,6 @@ L.control.layers(baseMaps, overlayMaps, {
   // Sending our earthquakes layer to the createMap function
   earthquakes.addTo(myMap);
 
-  
 
     // Add legend
     let legend = L.control({position: "bottomright"});
