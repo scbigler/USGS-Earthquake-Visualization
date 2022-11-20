@@ -1,6 +1,6 @@
 # leaflet-challenge
 
-![Earthquake-Visualization](static/img/screenshot.png)
+![Earthquake-Visualization](static/img/LeafletPart2.png)
 
 ## Background
 
