@@ -4,13 +4,11 @@
 
 ## Background
 
-Welcome to the United States Geological Survey, or USGS for short! The USGS is responsible for providing scientific data about natural hazards, the health of our ecosystems and environment; and the impacts of climate and land-use change. Their scientists develop new methods and tools to supply timely, relevant, and useful information about the Earth and its processes. 
+You fee that quake? You know you want to find out where it was centered and how big it was but the story hasn't hit the news wires yet.  Where to turn then? Well one place is this right here: [Earthquake Visualization](https://scbigler.github.io/leaflet-challenge/)
 
-They collect a massive amount of data from all over the world each day, but they lack a meaningful way of displaying it. Their hope is that being able to visualize their data will allow them to better educate the public and other government organizations on issues facing our planet.
 
 The USGS provides earthquake data in a number of different formats, updated every 5 minutes. Available at [USGS GeoJSON Feed](http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php), I chose a GeoJSON file to help  visualize **All Earthquakes from the past 7 Days**. 
 
-**The visualization can be seen here: [Earthquake Visualization](https://scbigler.github.io/leaflet-challenge/)**
 
 ### Notes
 * A `static` folder contain custom CSS, images, and a `config.js` file which holds the MapBox API key that will need to be entered. This is required to be able to view the visualization.
